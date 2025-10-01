@@ -13,7 +13,7 @@ const logger = winston.createLogger({
     environment: process.env.NODE_ENV || 'development'
   },
   transports: [
-    // Console transport for local development
+    // Console transport - Heroku automatically forwards to Papertrail
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
@@ -23,17 +23,8 @@ const logger = winston.createLogger({
   ]
 });
 
-// Add Papertrail transport if configured
-if (process.env.PAPERTRAIL_HOST && process.env.PAPERTRAIL_PORT) {
-  const { Syslog } = require('winston-syslog');
-  logger.add(new Syslog({
-    host: process.env.PAPERTRAIL_HOST,
-    port: process.env.PAPERTRAIL_PORT,
-    protocol: 'tls4',
-    localhost: 'ankit-github-demo-app',
-    eol: '\n'
-  }));
-  logger.info('Papertrail logging enabled');
-}
+// Note: Papertrail on Heroku works via log drains
+// All console.log and logger output is automatically sent to Papertrail
+// No additional configuration needed
 
 module.exports = logger;
