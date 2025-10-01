@@ -567,6 +567,26 @@ app.get('/api/cache/test', async (req, res) => {
   }
 });
 
+// New endpoint: Get daily summary (from worker process cache)
+app.get('/api/summary', async (req, res) => {
+  try {
+    const summary = await cache.get('daily:summary');
+    
+    if (!summary) {
+      return res.json({
+        message: 'No summary available yet',
+        note: 'Worker process generates summary every 60 seconds'
+      });
+    }
+    
+    logger.info('Daily summary requested');
+    res.json(summary);
+  } catch (err) {
+    logger.error('Error fetching summary', err);
+    res.status(500).json({ error: 'Failed to fetch summary' });
+  }
+});
+
 // New endpoint: Logging demo (demonstrates Papertrail/Winston)
 app.post('/api/log', (req, res) => {
   const { level = 'info', message = 'Test log message' } = req.body;

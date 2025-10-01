@@ -43,6 +43,8 @@ This app is deployed to Heroku using **GitHub Integration** with automatic deplo
 | `/api/stats` | GET | Page view statistics (PostgreSQL demo) |
 | `/api/cache/test` | GET | Redis cache test with counter |
 | `/api/log` | POST | Create log entry (Papertrail demo) |
+| `/api/summary` | GET | Daily summary from worker process |
+| `/test` | GET | Interactive add-ons test dashboard |
 
 ## Running Locally
 
@@ -71,7 +73,20 @@ This app demonstrates integration with popular Heroku add-ons:
 
 **Documentation:**
 - [SETUP.md](./SETUP.md) - Quick setup guide
-- [GUIDE.md](./GUIDE.md) - Complete implementation guide with troubleshooting
+- [GUIDE.md](./GUIDE.md) - Implementation details and troubleshooting
+- [ADDONS_COMPLETE_GUIDE.md](./ADDONS_COMPLETE_GUIDE.md) - Complete guide with use cases and examples
+
+## Process Types
+
+This application uses two Heroku process types:
+
+- **web**: Handles HTTP requests (index.js)
+- **worker**: Runs background jobs (worker.js)
+
+Enable worker process:
+```bash
+heroku ps:scale worker=1 -a ankit-github-demo-app
+```
 
 ## Environment Variables
 
