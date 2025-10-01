@@ -51,7 +51,7 @@ npm start
 
 ## Live App
 
-**Heroku URL:** `https://ankit-github-demo-app-<hash>.herokuapp.com/`
+**Heroku URL:** `https://ankit-github-demo-app-9d164818e030.herokuapp.com/`
 
 ## Environment Variables
 
