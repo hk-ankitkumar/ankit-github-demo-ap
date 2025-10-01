@@ -502,7 +502,7 @@ app.get('/api/info', (req, res) => {
     addons: {
       postgres: !!process.env.DATABASE_URL,
       redis: !!process.env.REDIS_URL,
-      papertrail: !!process.env.PAPERTRAIL_API_TOKEN,
+      papertrail: true, // Papertrail works via log drains, no env var needed
       newrelic: !!process.env.NEW_RELIC_LICENSE_KEY
     },
     timestamp: new Date().toISOString()
@@ -648,7 +648,7 @@ app.listen(PORT, () => {
   logger.info('Add-ons status:', {
     postgres: !!process.env.DATABASE_URL,
     redis: !!process.env.REDIS_URL,
-    papertrail: !!process.env.PAPERTRAIL_API_TOKEN,
+    papertrail: true,
     newrelic: !!process.env.NEW_RELIC_LICENSE_KEY
   });
 });
