@@ -1,8 +1,8 @@
-# 🚀 Ankit GitHub Demo App
+# Ankit's GitHub Demo App
 
 A simple Express.js application demonstrating Heroku's GitHub integration with automatic deployments.
 
-## 📋 Features
+## Features
 
 - ✅ Express.js web server
 - ✅ Multiple routes (/, /about, /api/health, /api/info)
@@ -11,14 +11,14 @@ A simple Express.js application demonstrating Heroku's GitHub integration with a
 - ✅ Automatic deployment from GitHub
 - ✅ Zero-downtime deployments
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Deployment:** Heroku (GitHub Integration)
 - **Version Control:** Git + GitHub
 
-## 🚀 Deployment Method
+## Deployment Method
 
 This app is deployed to Heroku using **GitHub Integration** with automatic deployments enabled.
 
@@ -28,7 +28,7 @@ This app is deployed to Heroku using **GitHub Integration** with automatic deplo
 3. Heroku builds and deploys the new version
 4. App goes live automatically
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -37,7 +37,7 @@ This app is deployed to Heroku using **GitHub Integration** with automatic deplo
 | `/api/health` | GET | Health check (JSON) |
 | `/api/info` | GET | System information (JSON) |
 
-## 🏃‍♂️ Running Locally
+## Running Locally
 
 ```bash
 # Install dependencies
@@ -49,21 +49,21 @@ npm start
 # Server runs on http://localhost:3000
 ```
 
-## 🌐 Live App
+## Live App
 
 **Heroku URL:** `https://ankit-github-demo-app-<hash>.herokuapp.com/`
 
-## 📝 Environment Variables
+## Environment Variables
 
 No environment variables required for basic functionality.
 
-## 🔧 Configuration Files
+## Configuration Files
 
 - `Procfile` - Tells Heroku how to run the app
 - `package.json` - Node.js dependencies and scripts
 - `.gitignore` - Files to exclude from Git
 
-## 📦 Deployment to Heroku
+## Deployment to Heroku
 
 ### Via GitHub Integration (Current Method):
 
@@ -79,10 +79,6 @@ heroku git:remote -a ankit-github-demo-app
 git push heroku main
 ```
 
-## 📄 License
-
-MIT
-
-## 👤 Author
+## Author
 
 Ankit Kumar
