@@ -11,7 +11,8 @@
     "test:api": "node tests/api.test.js",
     "test:features": "node tests/features.test.js",
     "test:review-app": "node tests/review-app.test.js",
-    "test:ci": "npm run test && npm run test:review-app"
+    "test:ci": "npm run test && npm run test:review-app",
+    "test:ci-safe": "node tests/ci-safe.test.js"
   },
   "engines": {
     "node": "20.x || 22.x"

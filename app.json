@@ -65,8 +65,8 @@
   },
   "scripts": {
     "postdeploy": "echo 'Review app deployed successfully! This is a temporary instance for testing.'",
-    "test-setup": "echo 'Setting up test environment...'",
-    "test": "npm test"
+    "test-setup": "echo 'Setting up test environment...' && sleep 5",
+    "test": "npm run test:ci-safe"
   },
   "environments": {
     "review": {
@@ -112,7 +112,9 @@
         }
       },
       "env": {
-        "NODE_ENV": "test"
+        "NODE_ENV": "test",
+        "CI": "true",
+        "HEROKU": "true"
       }
     }
   },
