@@ -163,8 +163,8 @@ app.get('/', (req, res) => {
           <a href="/test">Test Add-ons</a>
           <a href="/errors">Error Testing</a>
           <a href="/about">About</a>
-          <a href="/api/health">Health Check</a>
-          <a href="/api/info">System Info</a>
+          <a href="/health">Health Check</a>
+          <a href="/info">System Info</a>
         </div>
       </div>
     </body>
@@ -416,7 +416,7 @@ app.get('/about', (req, res) => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>About - GitHub Demo App</title>
+      <title>About - Heroku Onboarding Demo</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -446,6 +446,28 @@ app.get('/about', (req, res) => {
           border-radius: 8px;
         }
         .back-link:hover { background: #764ba2; }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          margin: 20px 0;
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .description {
+          background: #f8f9fa;
+          border-left: 4px solid #667eea;
+          padding: 20px;
+          margin: 20px 0;
+          border-radius: 5px;
+        }
+        .description p {
+          margin: 0;
+          line-height: 1.6;
+          color: #555;
+        }
         code {
           background: #f4f4f4;
           padding: 2px 6px;
@@ -456,36 +478,192 @@ app.get('/about', (req, res) => {
     </head>
     <body>
       <div class="container">
-        <h1>📖 About This App</h1>
+        <h1>About This Application</h1>
+        <div class="badge">Heroku Platform Demonstration</div>
         
-        <h2>🎯 Purpose</h2>
-        <p>This is a demonstration application showcasing Heroku's GitHub integration feature. It automatically deploys whenever code is pushed to the connected GitHub repository.</p>
+        <div class="description">
+          <p>This is a comprehensive demonstration application designed to showcase Heroku's platform capabilities and best practices. 
+          It demonstrates the integration of multiple Heroku add-ons, process types (web and worker), release phases, and error handling patterns. 
+          The application serves as a practical learning resource for developers getting started with Heroku's cloud platform.</p>
+        </div>
         
-        <h2>🛠️ Tech Stack</h2>
+        <h2>Technology Stack</h2>
         <p>
-          • <strong>Runtime:</strong> Node.js ${process.version}<br>
-          • <strong>Framework:</strong> Express.js<br>
-          • <strong>Deployment:</strong> Heroku (GitHub Integration)<br>
-          • <strong>Version Control:</strong> Git + GitHub
+          <strong>Runtime:</strong> Node.js ${process.version}<br>
+          <strong>Framework:</strong> Express.js<br>
+          <strong>Deployment:</strong> Heroku with GitHub Integration<br>
+          <strong>Version Control:</strong> Git + GitHub<br>
+          <strong>Add-ons:</strong> PostgreSQL, Redis, Papertrail, New Relic
         </p>
         
-        <h2>🚀 Deployment Workflow</h2>
+        <h2>Deployment Workflow</h2>
         <p>
-          1. Code changes pushed to GitHub<br>
-          2. Heroku detects the push automatically<br>
-          3. Heroku builds and deploys the new version<br>
-          4. App is live with zero downtime
+          1. Code changes are pushed to the GitHub repository<br>
+          2. Heroku automatically detects the push via webhook<br>
+          3. Release phase executes pre-deployment tasks<br>
+          4. Application is built and deployed with zero downtime<br>
+          5. Web and worker dynos are updated with the new version
         </p>
         
-        <h2>📡 Available Endpoints</h2>
+        <h2>Available Features</h2>
         <p>
-          • <code>GET /</code> - Home page<br>
-          • <code>GET /about</code> - This page<br>
-          • <code>GET /api/health</code> - Health check endpoint<br>
-          • <code>GET /api/info</code> - System information
+          <strong>Web Interface:</strong> Interactive dashboards for testing add-ons and error scenarios<br>
+          <strong>API Endpoints:</strong> RESTful endpoints for health checks and system information<br>
+          <strong>Process Types:</strong> Separate web and worker processes for scalability<br>
+          <strong>Error Testing:</strong> Controlled environment for testing Heroku error codes<br>
+          <strong>Monitoring:</strong> Integrated logging and performance monitoring
         </p>
         
         <a href="/" class="back-link">← Back to Home</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Health Check HTML Page
+app.get('/health', (req, res) => {
+  const healthData = {
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: Math.floor(process.uptime()),
+    environment: process.env.NODE_ENV || 'development'
+  };
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Health Check - Heroku Onboarding Demo</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: 100vh;
+          padding: 40px 20px;
+        }
+        .container {
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          max-width: 800px;
+          margin: 0 auto;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+          color: #667eea;
+          margin-bottom: 20px;
+          font-size: 2.5em;
+        }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          margin: 20px 0;
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .status-card {
+          background: #f8f9fa;
+          border-left: 4px solid #28a745;
+          padding: 20px;
+          margin: 20px 0;
+          border-radius: 5px;
+        }
+        .status-healthy {
+          border-left-color: #28a745;
+        }
+        .status-unhealthy {
+          border-left-color: #dc3545;
+        }
+        .info {
+          background: #f7f7f7;
+          padding: 20px;
+          border-radius: 10px;
+          margin: 20px 0;
+          text-align: left;
+        }
+        .info h3 {
+          color: #667eea;
+          margin-bottom: 15px;
+        }
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 15px;
+        }
+        .info-item {
+          background: white;
+          padding: 15px;
+          border-radius: 8px;
+          border: 1px solid #e0e0e0;
+        }
+        .info-item strong {
+          color: #667eea;
+          display: block;
+          margin-bottom: 5px;
+        }
+        .back-link {
+          display: inline-block;
+          margin-top: 20px;
+          padding: 12px 24px;
+          background: #667eea;
+          color: white;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: transform 0.2s;
+        }
+        .back-link:hover {
+          transform: translateY(-2px);
+          background: #764ba2;
+        }
+        .timestamp {
+          font-family: 'Courier New', monospace;
+          background: #f8f9fa;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-size: 0.9em;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Application Health Check</h1>
+        <div class="badge">System Status Monitor</div>
+        
+        <div class="status-card status-${healthData.status === 'healthy' ? 'healthy' : 'unhealthy'}">
+          <h2>Status: ${healthData.status.toUpperCase()}</h2>
+          <p>The application is running normally and all core services are operational.</p>
+        </div>
+        
+        <div class="info">
+          <h3>System Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Current Status</strong>
+              ${healthData.status}
+            </div>
+            <div class="info-item">
+              <strong>Uptime</strong>
+              ${Math.floor(healthData.uptime / 3600)}h ${Math.floor((healthData.uptime % 3600) / 60)}m ${healthData.uptime % 60}s
+            </div>
+            <div class="info-item">
+              <strong>Environment</strong>
+              ${healthData.environment}
+            </div>
+            <div class="info-item">
+              <strong>Last Check</strong>
+              <span class="timestamp">${new Date(healthData.timestamp).toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+        
+        <a href="/" class="back-link">Back to Home</a>
       </div>
     </body>
     </html>
@@ -499,6 +677,269 @@ app.get('/api/health', (req, res) => {
     uptime: process.uptime(),
     environment: process.env.NODE_ENV || 'development'
   });
+});
+
+// System Info HTML Page
+app.get('/info', async (req, res) => {
+  const memUsage = process.memoryUsage();
+  const systemInfo = {
+    app: 'Heroku Onboarding Demo Application',
+    version: '1.0.0',
+    deploymentMethod: 'GitHub Integration',
+    node: process.version,
+    platform: process.platform,
+    memory: {
+      used: Math.round(memUsage.heapUsed / 1024 / 1024),
+      total: Math.round(memUsage.heapTotal / 1024 / 1024),
+      rss: Math.round(memUsage.rss / 1024 / 1024)
+    },
+    addons: {
+      postgres: !!process.env.DATABASE_URL,
+      redis: !!process.env.REDIS_URL,
+      papertrail: true,
+      newrelic: !!process.env.NEW_RELIC_LICENSE_KEY
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>System Information - Heroku Onboarding Demo</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: 100vh;
+          padding: 40px 20px;
+        }
+        .container {
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          max-width: 1000px;
+          margin: 0 auto;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+          color: #667eea;
+          margin-bottom: 20px;
+          font-size: 2.5em;
+        }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          margin: 20px 0;
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .info-section {
+          background: #f7f7f7;
+          padding: 20px;
+          border-radius: 10px;
+          margin: 20px 0;
+        }
+        .info-section h3 {
+          color: #667eea;
+          margin-bottom: 15px;
+          font-size: 1.3em;
+        }
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+        .info-item {
+          background: white;
+          padding: 15px;
+          border-radius: 8px;
+          border: 1px solid #e0e0e0;
+        }
+        .info-item strong {
+          color: #667eea;
+          display: block;
+          margin-bottom: 8px;
+          font-size: 0.9em;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .info-value {
+          font-size: 1.1em;
+          color: #333;
+        }
+        .addon-status {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .status-indicator {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+        .status-active {
+          background: #28a745;
+        }
+        .status-inactive {
+          background: #dc3545;
+        }
+        .memory-bar {
+          background: #e9ecef;
+          height: 8px;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-top: 5px;
+        }
+        .memory-fill {
+          background: linear-gradient(90deg, #28a745, #20c997);
+          height: 100%;
+          transition: width 0.3s ease;
+        }
+        .back-link {
+          display: inline-block;
+          margin-top: 20px;
+          padding: 12px 24px;
+          background: #667eea;
+          color: white;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: transform 0.2s;
+        }
+        .back-link:hover {
+          transform: translateY(-2px);
+          background: #764ba2;
+        }
+        .timestamp {
+          font-family: 'Courier New', monospace;
+          background: #f8f9fa;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-size: 0.9em;
+          color: #666;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>System Information</h1>
+        <div class="badge">Runtime Environment Details</div>
+        
+        <div class="info-section">
+          <h3>Application Details</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Application Name</strong>
+              <div class="info-value">${systemInfo.app}</div>
+            </div>
+            <div class="info-item">
+              <strong>Version</strong>
+              <div class="info-value">${systemInfo.version}</div>
+            </div>
+            <div class="info-item">
+              <strong>Deployment Method</strong>
+              <div class="info-value">${systemInfo.deploymentMethod}</div>
+            </div>
+            <div class="info-item">
+              <strong>Last Updated</strong>
+              <div class="timestamp">${new Date(systemInfo.timestamp).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Runtime Environment</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Node.js Version</strong>
+              <div class="info-value">${systemInfo.node}</div>
+            </div>
+            <div class="info-item">
+              <strong>Platform</strong>
+              <div class="info-value">${systemInfo.platform}</div>
+            </div>
+            <div class="info-item">
+              <strong>Environment</strong>
+              <div class="info-value">${process.env.NODE_ENV || 'development'}</div>
+            </div>
+            <div class="info-item">
+              <strong>Process ID</strong>
+              <div class="info-value">${process.pid}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Memory Usage</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Heap Used</strong>
+              <div class="info-value">${systemInfo.memory.used} MB</div>
+              <div class="memory-bar">
+                <div class="memory-fill" style="width: ${(systemInfo.memory.used / systemInfo.memory.total) * 100}%"></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <strong>Heap Total</strong>
+              <div class="info-value">${systemInfo.memory.total} MB</div>
+            </div>
+            <div class="info-item">
+              <strong>RSS Memory</strong>
+              <div class="info-value">${systemInfo.memory.rss} MB</div>
+            </div>
+            <div class="info-item">
+              <strong>Memory Efficiency</strong>
+              <div class="info-value">${Math.round((systemInfo.memory.used / systemInfo.memory.total) * 100)}% utilized</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Heroku Add-ons Status</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>PostgreSQL Database</strong>
+              <div class="addon-status">
+                <div class="status-indicator ${systemInfo.addons.postgres ? 'status-active' : 'status-inactive'}"></div>
+                <span class="info-value">${systemInfo.addons.postgres ? 'Connected' : 'Not configured'}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <strong>Redis Cache</strong>
+              <div class="addon-status">
+                <div class="status-indicator ${systemInfo.addons.redis ? 'status-active' : 'status-inactive'}"></div>
+                <span class="info-value">${systemInfo.addons.redis ? 'Connected' : 'Not configured'}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <strong>Papertrail Logging</strong>
+              <div class="addon-status">
+                <div class="status-indicator ${systemInfo.addons.papertrail ? 'status-active' : 'status-inactive'}"></div>
+                <span class="info-value">${systemInfo.addons.papertrail ? 'Active' : 'Not configured'}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <strong>New Relic APM</strong>
+              <div class="addon-status">
+                <div class="status-indicator ${systemInfo.addons.newrelic ? 'status-active' : 'status-inactive'}"></div>
+                <span class="info-value">${systemInfo.addons.newrelic ? 'Monitoring' : 'Not configured'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <a href="/" class="back-link">Back to Home</a>
+      </div>
+    </body>
+    </html>
+  `);
 });
 
 app.get('/api/info', (req, res) => {
