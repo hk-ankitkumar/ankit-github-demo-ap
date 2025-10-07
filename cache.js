@@ -8,6 +8,8 @@ if (process.env.REDIS_URL) {
   redisClient = redis.createClient({
     url: process.env.REDIS_URL,
     socket: {
+      tls: process.env.REDIS_URL && process.env.REDIS_URL.startsWith('rediss://'),
+      rejectUnauthorized: false, // Accept self-signed certificates
       reconnectStrategy: (retries) => {
         if (retries > 10) {
           logger.error('Redis reconnection failed after 10 attempts');
@@ -23,7 +25,10 @@ if (process.env.REDIS_URL) {
   });
 
   redisClient.on('error', (err) => {
-    logger.error('Redis error', err);
+    // Only log non-certificate errors to reduce log spam
+    if (!err.message.includes('certificate')) {
+      logger.error('Redis error', err);
+    }
   });
 
   redisClient.on('ready', () => {
@@ -45,7 +50,10 @@ async function get(key) {
     const value = await redisClient.get(key);
     return value ? JSON.parse(value) : null;
   } catch (err) {
-    logger.error(`Error getting key ${key} from Redis`, err);
+    // Only log non-certificate errors
+    if (!err.message.includes('certificate')) {
+      logger.error(`Error getting key ${key} from Redis`, err);
+    }
     return null;
   }
 }
@@ -57,7 +65,10 @@ async function set(key, value, expirationSeconds = 3600) {
     await redisClient.setEx(key, expirationSeconds, JSON.stringify(value));
     return true;
   } catch (err) {
-    logger.error(`Error setting key ${key} in Redis`, err);
+    // Only log non-certificate errors
+    if (!err.message.includes('certificate')) {
+      logger.error(`Error setting key ${key} in Redis`, err);
+    }
     return false;
   }
 }
@@ -69,7 +80,10 @@ async function del(key) {
     await redisClient.del(key);
     return true;
   } catch (err) {
-    logger.error(`Error deleting key ${key} from Redis`, err);
+    // Only log non-certificate errors
+    if (!err.message.includes('certificate')) {
+      logger.error(`Error deleting key ${key} from Redis`, err);
+    }
     return false;
   }
 }
@@ -80,7 +94,10 @@ async function increment(key) {
   try {
     return await redisClient.incr(key);
   } catch (err) {
-    logger.error(`Error incrementing key ${key} in Redis`, err);
+    // Only log non-certificate errors
+    if (!err.message.includes('certificate')) {
+      logger.error(`Error incrementing key ${key} in Redis`, err);
+    }
     return 0;
   }
 }
