@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "test": "npm run test:health && npm run test:api && npm run test:features",
+    "test:health": "node tests/health.test.js",
+    "test:api": "node tests/api.test.js",
+    "test:features": "node tests/features.test.js",
+    "test:review-app": "node tests/review-app.test.js",
+    "test:ci": "npm run test && npm run test:review-app"
   },
   "engines": {
     "node": "20.x || 22.x"

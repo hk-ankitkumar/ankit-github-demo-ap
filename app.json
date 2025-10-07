@@ -64,7 +64,9 @@
     }
   },
   "scripts": {
-    "postdeploy": "echo 'Review app deployed successfully! This is a temporary instance for testing.'"
+    "postdeploy": "echo 'Review app deployed successfully! This is a temporary instance for testing.'",
+    "test-setup": "echo 'Setting up test environment...'",
+    "test": "npm test"
   },
   "environments": {
     "review": {
