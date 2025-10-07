@@ -125,22 +125,35 @@ app.get('/', (req, res) => {
           transform: translateY(-2px);
           background: #764ba2;
         }
-        .emoji {
-          font-size: 3em;
-          margin-bottom: 20px;
+        .description {
+          background: #f8f9fa;
+          border-left: 4px solid #667eea;
+          padding: 20px;
+          margin: 20px 0;
+          border-radius: 5px;
+        }
+        .description p {
+          margin: 0;
+          line-height: 1.6;
+          color: #555;
         }
       </style>
     </head>
     <body>
       <div class="container">
-        <div class="emoji">🚀</div>
-        <h1>GitHub Demo App</h1>
-        <div class="badge">✅ Deployed via GitHub Integration</div>
+        <h1>Heroku Onboarding Demo Application</h1>
+        <div class="badge">Deployed via GitHub Integration</div>
+        
+        <div class="description">
+          <p>This is a comprehensive demonstration application designed to showcase Heroku's platform capabilities and best practices. 
+          It demonstrates the integration of multiple Heroku add-ons, process types (web and worker), release phases, and error handling patterns. 
+          The application serves as a practical learning resource for developers getting started with Heroku's cloud platform.</p>
+        </div>
         
         <div class="info">
-          <h3>📦 Deployment Info</h3>
+          <h3>Deployment Information</h3>
           <ul>
-            <li><strong>Method:</strong> GitHub → Heroku Auto-Deploy</li>
+            <li><strong>Method:</strong> GitHub to Heroku Auto-Deploy</li>
             <li><strong>Node Version:</strong> ${process.version}</li>
             <li><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</li>
           </ul>
@@ -639,13 +652,13 @@ app.get('/errors', (req, res) => {
         }
         .error-code {
           display: inline-block;
-          background: #ee5a24;
+          background: #28a745;
           color: white;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 12px;
-          font-weight: bold;
-          margin-bottom: 10px;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 14px;
+          margin-bottom: 30px;
+          border: 2px solid #1e7e34;
         }
         .description {
           font-size: 14px;
