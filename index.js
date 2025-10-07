@@ -144,6 +144,14 @@ app.get('/', (req, res) => {
         <h1>Heroku Onboarding Demo Application</h1>
         <div class="badge">Deployed via GitHub Integration</div>
         
+        ${process.env.REVIEW_APP === 'true' ? `
+        <div style="background: #fff3cd; border: 2px solid #ffeaa7; border-radius: 10px; padding: 20px; margin: 20px 0; color: #856404;">
+          <h3 style="color: #ee5a24; margin-bottom: 10px;">🔄 Review App Instance</h3>
+          <p>You are viewing a temporary Heroku Review App created for testing pull request changes. 
+          This instance demonstrates new features before they're merged to production.</p>
+        </div>
+        ` : ''}
+        
         <div class="description">
           <p>This is a comprehensive demonstration application designed to showcase Heroku's platform capabilities and best practices. 
           It demonstrates the integration of multiple Heroku add-ons, process types (web and worker), release phases, and error handling patterns. 
@@ -165,6 +173,7 @@ app.get('/', (req, res) => {
           <a href="/about">About</a>
           <a href="/health">Health Check</a>
           <a href="/info">System Info</a>
+          ${process.env.REVIEW_APP === 'true' ? '<a href="/review-app" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">Review App Info</a>' : ''}
         </div>
       </div>
     </body>
@@ -515,6 +524,270 @@ app.get('/about', (req, res) => {
         </p>
         
         <a href="/" class="back-link">← Back to Home</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Review App Dashboard (only available in review app instances)
+app.get('/review-app', (req, res) => {
+  // Only show this page if it's actually a review app
+  if (process.env.REVIEW_APP !== 'true') {
+    return res.redirect('/');
+  }
+
+  const reviewAppInfo = {
+    appName: process.env.HEROKU_APP_NAME || 'Unknown',
+    slugCommit: process.env.HEROKU_SLUG_COMMIT || 'Unknown',
+    dynoId: process.env.DYNO || 'Unknown',
+    environment: process.env.NODE_ENV || 'development',
+    createdAt: new Date().toISOString(),
+    isReviewApp: process.env.REVIEW_APP === 'true',
+    branch: process.env.HEROKU_BRANCH || 'Unknown'
+  };
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Review App Dashboard - Heroku Onboarding Demo</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+          min-height: 100vh;
+          padding: 40px 20px;
+        }
+        .container {
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          max-width: 1000px;
+          margin: 0 auto;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+          color: #ee5a24;
+          margin-bottom: 20px;
+          font-size: 2.5em;
+        }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          margin: 20px 0;
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .warning-banner {
+          background: #fff3cd;
+          border: 2px solid #ffeaa7;
+          border-radius: 10px;
+          padding: 20px;
+          margin: 20px 0;
+          color: #856404;
+        }
+        .warning-banner h3 {
+          color: #ee5a24;
+          margin-bottom: 10px;
+        }
+        .info-section {
+          background: #f7f7f7;
+          padding: 20px;
+          border-radius: 10px;
+          margin: 20px 0;
+        }
+        .info-section h3 {
+          color: #ee5a24;
+          margin-bottom: 15px;
+          font-size: 1.3em;
+        }
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+        .info-item {
+          background: white;
+          padding: 15px;
+          border-radius: 8px;
+          border: 1px solid #e0e0e0;
+        }
+        .info-item strong {
+          color: #ee5a24;
+          display: block;
+          margin-bottom: 8px;
+          font-size: 0.9em;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .info-value {
+          font-size: 1.1em;
+          color: #333;
+        }
+        .feature-highlight {
+          background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+          color: white;
+          padding: 20px;
+          border-radius: 10px;
+          margin: 20px 0;
+        }
+        .feature-highlight h3 {
+          margin-bottom: 10px;
+        }
+        .back-link {
+          display: inline-block;
+          margin-top: 20px;
+          padding: 12px 24px;
+          background: #ee5a24;
+          color: white;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: transform 0.2s;
+        }
+        .back-link:hover {
+          transform: translateY(-2px);
+          background: #d63031;
+        }
+        .timestamp {
+          font-family: 'Courier New', monospace;
+          background: #f8f9fa;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-size: 0.9em;
+          color: #666;
+        }
+        .status-indicator {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background: #28a745;
+          border-radius: 50%;
+          margin-right: 8px;
+        }
+        .test-buttons {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 15px;
+          margin-top: 20px;
+        }
+        .test-button {
+          display: block;
+          padding: 15px;
+          background: white;
+          border: 2px solid #ee5a24;
+          color: #ee5a24;
+          text-decoration: none;
+          border-radius: 8px;
+          text-align: center;
+          font-weight: bold;
+          transition: all 0.3s;
+        }
+        .test-button:hover {
+          background: #ee5a24;
+          color: white;
+          transform: translateY(-2px);
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Review App Dashboard</h1>
+        <div class="badge">
+          <span class="status-indicator"></span>
+          Temporary Testing Instance
+        </div>
+        
+        <div class="warning-banner">
+          <h3>⚠️ Review App Notice</h3>
+          <p>This is a temporary Heroku Review App created for testing pull request changes. 
+          This instance will be automatically destroyed when the pull request is closed or merged. 
+          Do not use this for production data or long-term testing.</p>
+        </div>
+
+        <div class="feature-highlight">
+          <h3>🚀 New Feature: Review App Dashboard</h3>
+          <p>This dashboard is a new feature being tested in this review app instance. 
+          It demonstrates how review apps can be used to test new functionality before merging to production.</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>Review App Details</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>App Name</strong>
+              <div class="info-value">${reviewAppInfo.appName}</div>
+            </div>
+            <div class="info-item">
+              <strong>Environment</strong>
+              <div class="info-value">${reviewAppInfo.environment}</div>
+            </div>
+            <div class="info-item">
+              <strong>Dyno ID</strong>
+              <div class="info-value">${reviewAppInfo.dynoId}</div>
+            </div>
+            <div class="info-item">
+              <strong>Deployment Time</strong>
+              <div class="timestamp">${new Date(reviewAppInfo.createdAt).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Git Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Commit SHA</strong>
+              <div class="info-value">${reviewAppInfo.slugCommit.substring(0, 8)}...</div>
+            </div>
+            <div class="info-item">
+              <strong>Branch</strong>
+              <div class="info-value">${reviewAppInfo.branch}</div>
+            </div>
+            <div class="info-item">
+              <strong>Review App Status</strong>
+              <div class="info-value">${reviewAppInfo.isReviewApp ? 'Active' : 'Not a Review App'}</div>
+            </div>
+            <div class="info-item">
+              <strong>Node Version</strong>
+              <div class="info-value">${process.version}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Test This Review App</h3>
+          <p>Use these links to test the functionality in this review app instance:</p>
+          <div class="test-buttons">
+            <a href="/health" class="test-button">Health Check</a>
+            <a href="/info" class="test-button">System Info</a>
+            <a href="/test" class="test-button">Test Add-ons</a>
+            <a href="/errors" class="test-button">Error Testing</a>
+            <a href="/api/health" class="test-button">API Health</a>
+            <a href="/api/info" class="test-button">API Info</a>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Review App Workflow</h3>
+          <p>
+            <strong>1. Development:</strong> Create feature branch and make changes<br>
+            <strong>2. Pull Request:</strong> Open PR to trigger review app creation<br>
+            <strong>3. Testing:</strong> Test changes in isolated environment<br>
+            <strong>4. Review:</strong> Stakeholders can review actual functionality<br>
+            <strong>5. Merge:</strong> Merge PR and review app is automatically destroyed<br>
+            <strong>6. Production:</strong> Changes are deployed to production
+          </p>
+        </div>
+        
+        <a href="/" class="back-link">Back to Home</a>
       </div>
     </body>
     </html>

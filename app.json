@@ -1,0 +1,119 @@
+{
+  "name": "Heroku Onboarding Demo Application",
+  "description": "A comprehensive demonstration application showcasing Heroku's platform capabilities including add-ons, process types, release phases, and error handling patterns.",
+  "repository": "https://github.com/hk-ankitkumar/ankit-github-demo-ap",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": [
+    "heroku",
+    "nodejs",
+    "express",
+    "demo",
+    "onboarding",
+    "postgresql",
+    "redis",
+    "papertrail",
+    "newrelic",
+    "review-apps"
+  ],
+  "image": "heroku/nodejs",
+  "stack": "heroku-22",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:essential-0",
+      "as": "DATABASE"
+    },
+    {
+      "plan": "heroku-redis:mini",
+      "as": "REDIS"
+    },
+    {
+      "plan": "papertrail:choklad",
+      "as": "PAPERTRAIL"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment mode for the application",
+      "value": "review",
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "description": "Logging level for the application",
+      "value": "info",
+      "required": false
+    },
+    "REVIEW_APP": {
+      "description": "Flag to indicate this is a review app instance",
+      "value": "true",
+      "required": false
+    }
+  },
+  "scripts": {
+    "postdeploy": "echo 'Review app deployed successfully! This is a temporary instance for testing.'"
+  },
+  "environments": {
+    "review": {
+      "addons": [
+        {
+          "plan": "heroku-postgresql:essential-0",
+          "as": "DATABASE"
+        },
+        {
+          "plan": "heroku-redis:mini",
+          "as": "REDIS"
+        },
+        {
+          "plan": "papertrail:choklad",
+          "as": "PAPERTRAIL"
+        }
+      ],
+      "formation": {
+        "web": {
+          "quantity": 1,
+          "size": "basic"
+        },
+        "worker": {
+          "quantity": 1,
+          "size": "basic"
+        }
+      },
+      "env": {
+        "NODE_ENV": "review"
+      }
+    },
+    "test": {
+      "addons": [
+        {
+          "plan": "heroku-postgresql:essential-0",
+          "as": "DATABASE"
+        }
+      ],
+      "formation": {
+        "web": {
+          "quantity": 1,
+          "size": "basic"
+        }
+      },
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  },
+  "success_url": "/",
+  "website": "https://github.com/hk-ankitkumar/ankit-github-demo-ap"
+}
