@@ -143,6 +143,9 @@ app.get('/', (req, res) => {
       <div class="container">
         <h1>Heroku Onboarding Demo Application</h1>
         <div class="badge">Deployed via GitHub Integration</div>
+        <div style="background: #ff6b35; color: white; padding: 15px; border-radius: 10px; margin: 20px 0; text-align: center;">
+          <strong>🚧 This is a STAGING version of the application 🚧</strong>
+        </div>
         
         <div class="description">
           <p>This is a comprehensive demonstration application designed to showcase Heroku's platform capabilities and best practices. 
