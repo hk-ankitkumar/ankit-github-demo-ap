@@ -1,7 +1,7 @@
 {
   "name": "ankit-github-demo-app",
   "version": "1.0.0",
-  "description": "A simple Express app deployed to Heroku via GitHub integration",
+  "description": "A simple Express app deployed to Heroku via GitHub integration - Preboot testing",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
